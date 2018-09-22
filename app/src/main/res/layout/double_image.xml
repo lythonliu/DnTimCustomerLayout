@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by 动脑科技-Tim on 17-7-19 下午11:02
+  ~ Copyright (c) 2017. All rights reserved
+  ~
+  ~ Last modified 17-7-18 下午9:03
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <com.dn.tim.dntimcustomerlayout.widget.DoubleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/flag_us"
+        android:drawableRight="@mipmap/flag_uk"
+        android:textColor="#FF0000"
+        android:textSize="32sp"
+        android:text="5 - 5"
+        android:spacing="15dp"/>
+
+</LinearLayout>

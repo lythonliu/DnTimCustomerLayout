@@ -1,0 +1,105 @@
+学习思路：
+	1. 熟悉源码中view绘制 / 系统控件
+	2. 大量实战 +　经验总结
+	３.　学会渲染（性能性能）
+	４.关注　好用的开源引擎　jbox2d + 重力感应
+	
+第一部
+
+
+	ActivityThread #handleLaunchActivity
+	ActivityThread #handleResumeActivity
+		
+		WindowManager  
+		WindowManager--->WindowManagerService(分析) decor  ViewRootImpl
+			
+		ViewRootImpl	view		
+	
+	触发：
+		WindowManagerService --->reclaimSomeSurfaceMemoryLocked
+							---->dispatchGetNewSurface
+							
+		ViewRootImpl.java
+					->MSG_DISPATCH_GET_NEW_SURFACE
+					handleGetNewSurface
+					--->scheduleTraversals -->mTraversalRunnable-->doTraversal
+					
+					--->performMeasure
+							--->mView 在哪儿赋值的
+					 final Rect dirty = mDirty;
+					 
+Activity在创建的过程当中， 解析xml的时机， 将xml绘制到windows的时机和流程、
+
+套路：
+	在onMeasure（）
+	两种情况：
+		1.继承自View的子类
+			只需要重写onMeasure测量好自己的宽高就可以了。
+			最终调用setMeasuredDimension()保存好自己的测量宽高。
+				int mode = MeasureSpec.getMode(widthMeasureSpec);
+				int Size = MeasureSpec.getSize(widthMeasureSpec);
+				int viewSize = 0;
+				switch(mode){
+					case MeasureSpec.EXACTLY:
+						viewSize = size;//当前view的尺寸就为父容器的尺寸
+						break;
+					case MeasureSpec.AT_MOST:
+						viewSize = Math.min(size, getContentSize());//当前view的尺寸就为内容尺寸和费容器尺寸当中的最小值。
+						break;
+					case MeasureSpec.UNSPECIFIED:
+						viewSize = getContentSize();//内容有多大，久设置多大尺寸。
+						break;
+					default:
+						break;
+				}
+				
+				view 提供的api：
+					
+					
+	
+		2.继承自ViewGroup的子类：
+				不但需要重写onMeasure测量自己，还要测量子控件的规格大小。
+				可以直接使用ViewGroup的工具方法来测量里面的子控件，也可以自己来实现这一套子控件的测量（比如：RelativeLayout）
+					
+				//1.测量自己的尺寸
+						ViewGroup.onMeasure();
+				//1.1 为每一个child计算测量规格信息(MeasureSpec)
+						ViewGroup.getChildMeasureSpec();
+				//1.2 将上面测量后的结果，传给每一个子View，子view测量自己的尺寸
+						child.measure();
+
+				//1.3 子View测量完，ViewGroup就可以拿到这个子View的测量后的尺寸了
+					child.getChildMeasuredSize();//child.getMeasuredWidth()和child.getMeasuredHeight()
+				//1.4ViewGroup自己就可以根据自身的情况(Padding等等),来计算自己的尺寸
+						ViewGroup.calculateSelfSize();
+				//2.保存自己的尺寸
+				ViewGroup.setMeasuredDimension(size);
+				  ViewGroup中提供的Measure相关的api:
+					measureChild
+					measureChildren(所有)
+					measureChildWithMargins
+				    getChildMeasureSpec
+
+第二部分：
+	自定义的分类：
+	
+		1. 继承控件
+			指继承系统的原生控件，修改或者装饰系统控件某些方法
+				1. 看系统控件里面是否有控件 能够支持 （50%-80%）产品功能
+				2. 在原有基础上 添加特定场景的产品功能。
+		
+		2. 自绘控件
+			系统的控件库中找不到 相似逻辑的额控件
+			完成 产品逻辑不规则  / 较为特殊的产品需求， 需要自己进行绘制
+			封装性/适配性
+			知识点 cavans path  
+			
+				invalidate();
+				postInvalidate();
+		
+		
+		3.组合控件
+		
+			简单 （注意点）
+					 
+					 

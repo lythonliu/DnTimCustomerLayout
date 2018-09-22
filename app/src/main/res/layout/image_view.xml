@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Created by 动脑科技-Tim on 17-7-19 下午10:14
+  ~ Copyright (c) 2017. All rights reserved
+  ~
+  ~ Last modified 17-7-19 下午10:14
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitStart"
+        android:src="@mipmap/android1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:background="#0af"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/android1"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="bottom"
+            android:background="#0af"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/android1"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:layout_gravity="bottom"
+            android:background="#0af"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/android1"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:layout_gravity="bottom"
+            android:background="#0af"
+            android:scaleType="fitEnd"
+            android:src="@mipmap/android1"/>
+
+    </LinearLayout>
+
+</FrameLayout>
